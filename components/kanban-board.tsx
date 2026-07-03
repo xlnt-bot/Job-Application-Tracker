@@ -22,6 +22,7 @@ import {
 import { Button } from "./ui/button";
 import CreateJobApplicationDialog from "./create-job-dialog";
 import JobApplicationCard from "./job-application-card";
+import { useBoards } from "@/lib/hooks/useBoards";
 
 interface KanbanBoardProps {
   board: Board;
@@ -135,14 +136,15 @@ function SortableJobCard({
 }
 
 export default function KanbanBoard({ board, userId }: KanbanBoardProps) {
-  const columns = board.columns;
+
+  const {columns} = useBoards(board);
 
   const sortedColumns = columns?.sort((a, b) => a.order - b.order) || [];
 
   return (
     <>
       <div>
-        <div>
+        <div className="flex gap-4 overflow-x-auto pb-4">
           {columns.map((col, key) => {
             const config = COLUMN_CONFIG[key] || {
               color: "bg-gray-500",

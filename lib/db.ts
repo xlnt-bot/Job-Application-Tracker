@@ -9,13 +9,13 @@ interface MongooseCache {
 }
 
 declare global {
-    var mangoose: MongooseCache | undefined;
+    var mongoose: MongooseCache | undefined;
 }
 
-let cached: MongooseCache = global.mangoose || { conn: null, promise: null };
+let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 
-if (!global.mangoose) {
-    global.mangoose = cached;
+if (!global.mongoose) {
+    global.mongoose = cached;
 }
 
 async function connectDB() {
@@ -34,8 +34,8 @@ async function connectDB() {
             bufferCommands: false,
         };
 
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mangoose) => {
-            return mangoose;
+        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+            return mongoose;
         });
     }
 
